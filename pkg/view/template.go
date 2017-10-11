@@ -4,16 +4,27 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"path/filepath"
 )
 
 var (
 	tpIndex = parseTemplate("template/root.tmpl", "template/index.tmpl")
 )
 
+const templateDir = "template"
+
+func joinTemplateDir(files ...string) []string {
+	r := make([]string, len(files))
+	for i, f := range files {
+		r[i] = filepath.Join(templateDir, f)
+	}
+	return r
+}
+
 func parseTemplate(files ...string) *template.Template {
 	t := template.New("")
 	t.Funcs(template.FuncMap{})
-	_, err := t.ParseFiles(files...)
+	_, err := t.ParseFiles(joinTemplateDir(files...)...)
 	if err != nil {
 		panic(err)
 	}

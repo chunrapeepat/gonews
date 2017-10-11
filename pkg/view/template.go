@@ -7,16 +7,18 @@ import (
 )
 
 var (
-	tpIndex = template.New("")
+	tpIndex = parseTemplate("template/root.tmpl", "template/index.tmpl")
 )
 
-func init() {
-	tpIndex.Funcs(template.FuncMap{})
-	_, err := tpIndex.ParseFiles("template/root.tmpl", "template/index.tmpl")
+func parseTemplate(files ...string) *template.Template {
+	t := template.New("")
+	t.Funcs(template.FuncMap{})
+	_, err := t.ParseFiles(files...)
 	if err != nil {
 		panic(err)
 	}
-	tpIndex = tpIndex.Lookup("root")
+	t = t.Lookup("root")
+	return t
 }
 
 func render(t *template.Template, w http.ResponseWriter, data interface{}) {

@@ -3,6 +3,7 @@ package model
 import (
 	"crypto/rand"
 	"encoding/base64"
+	"sync"
 	"time"
 )
 
@@ -18,6 +19,7 @@ type News struct {
 
 var (
 	newsStorage []*News
+	mutexNews   sync.Mutex
 )
 
 func generateID() string {
@@ -30,14 +32,24 @@ func CreateNews(news *News) {
 	news.ID = generateID()
 	news.CreatedAt = time.Now()
 	news.UpdatedAt = news.CreatedAt
+	mutexNews.Lock()
+	defer mutexNews.Unlock()
 	newsStorage = append(newsStorage, news)
 }
 
 func ListNews() []*News {
-	return newsStorage
+	mutexNews.Lock()
+	defer mutexNews.Unlock()
+	r := make([]*News, len(newsStorage))
+	for i := range newsStorage {
+		r[i] = newsStorage[i]
+	}
+	return r
 }
 
 func GetNews(id string) *News {
+	mutexNews.Lock()
+	defer mutexNews.Unlock()
 	for _, news := range newsStorage {
 		if news.ID == id {
 			return news
@@ -47,6 +59,8 @@ func GetNews(id string) *News {
 }
 
 func DeleteNews(id string) {
+	mutexNews.Lock()
+	defer mutexNews.Unlock()
 	for i, news := range newsStorage {
 		if news.ID == id {
 			newsStorage = append(newsStorage[:i], newsStorage[i+1:]...)

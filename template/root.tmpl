@@ -6,18 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="/-/css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
   <title>Gonews | a news website made by go</title>
-  {{template "root-style"}}
+  {{template "root-style" .}}
 </head>
 <body>
   <div>
     This is a Navbar
   </div>
-  {{template "root-body"}}
+  {{template "root-body" .}}
   <div>
     This is a footer
   </div>
-  {{template "root-script"}}
+  {{template "root-script" .}}
 </body>
 </html>
 {{end}}

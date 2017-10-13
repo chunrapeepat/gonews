@@ -4,19 +4,19 @@ import "net/http"
 
 // Mount mounts handlers to mux
 func Mount(mux *http.ServeMux) {
-  mux.HandleFunc("/", indexHandler)
-  mux.HandleFunc("/news/", newsView)
+	mux.HandleFunc("/", indexHandler)
+	mux.HandleFunc("/news/", newsView)
 
-  adminMux := http.NewServeMux()
-  adminMux.HandleFunc("/login", adminLogin)
-  adminMux.HandleFunc("/list", adminList)
-  adminMux.HandleFunc("/create", adminCreate)
-  adminMux.HandleFunc("/edit", adminEdit)
+	adminMux := http.NewServeMux()
+	adminMux.HandleFunc("/login", adminLogin)
+	adminMux.HandleFunc("/list", adminList)
+	adminMux.HandleFunc("/create", adminCreate)
+	adminMux.HandleFunc("/edit", adminEdit)
 
-  mux.Handle("/admin", onlyAdmin(adminMux))
+	mux.Handle("/admin/", http.StripPrefix("/admin", onlyAdmin(adminMux)))
 }
 
 // Admin middleware
 func onlyAdmin(h http.Handler) http.Handler {
-  return h
+	return h
 }

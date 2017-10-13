@@ -13,7 +13,8 @@ import (
 )
 
 var (
-	tpIndex = parseTemplate("template/root.tmpl", "template/index.tmpl")
+	tpIndex      = parseTemplate("root.tmpl", "index.tmpl")
+	tpAdminLogin = parseTemplate("root.tmpl", "admin/login.tmpl")
 )
 
 var m = minify.New()
@@ -59,4 +60,9 @@ func render(t *template.Template, w http.ResponseWriter, data interface{}) {
 // Index renders index view
 func Index(w http.ResponseWriter, data interface{}) {
 	render(tpIndex, w, data)
+}
+
+// AdminLogin renders admin login view
+func AdminLogin(w http.ResponseWriter, data interface{}) {
+	render(tpAdminLogin, w, data)
 }

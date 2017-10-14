@@ -5,7 +5,7 @@
   <br>
   <ul>
   {{range .List}}
-    <li><a href="/news/{{.ID}}">{{.Topic}}</a></li>
+    <li><a href="/news/{{.ID.Hex}}">{{.Topic}}</a></li>
   {{end}}
   </ul>
 </div>

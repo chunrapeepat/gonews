@@ -7,6 +7,9 @@ func Mount(mux *http.ServeMux) {
 	mux.HandleFunc("/", indexHandler)
 	mux.Handle("/news/", http.StripPrefix("/news", http.HandlerFunc(newsView)))
 
+	fs := http.FileServer(http.Dir("static"))
+	mux.Handle("/-/", http.StripPrefix("/-", fs))
+
 	adminMux := http.NewServeMux()
 	adminMux.HandleFunc("/login", adminLogin)
 	adminMux.HandleFunc("/list", adminList)

@@ -15,7 +15,25 @@ func adminLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func adminList(w http.ResponseWriter, r *http.Request) {
-	view.AdminList(w, nil)
+	if r.Method == http.MethodPost {
+		if r.FormValue("action") == "delete" {
+			id := r.FormValue("id")
+			err := model.DeleteNews(id)
+			if err != nil {
+				panic(err)
+			}
+		}
+		http.Redirect(w, r, "/admin/list", http.StatusSeeOther)
+		return
+	}
+	list, err := model.ListNews()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	view.AdminList(w, &view.AdminListData{
+		List: list,
+	})
 }
 
 func adminCreate(w http.ResponseWriter, r *http.Request) {

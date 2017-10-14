@@ -2,6 +2,32 @@
 <div>
   <h1>Admin List</h1>
   <a href="/admin/create">Create News</a>
+  <br>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Topic</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{range .List}}
+      <tr>
+        <td>{{.ID.Hex}}</td>
+        <td>{{.Topic}}</td>
+        <td>
+          <a class="btn" href="/admin/edit?id={{.ID.Hex}}">Edit</a>
+          <form method="POST">
+            <input type="hidden" name="action" value="delete">
+            <input type="hidden" name="id" value="{{.ID.Hex}}">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {{end}}
+    </tbody>
+  </table>
 </div>
 {{end}}
 

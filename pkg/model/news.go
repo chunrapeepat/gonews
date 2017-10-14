@@ -75,10 +75,10 @@ func GetNews(id string) (*News, error) {
 
 //DeleteNews delete new from database by id
 func DeleteNews(id string) error {
-	objectID := bson.ObjectId(id)
-	if !objectID.Valid() {
+	if !bson.IsObjectIdHex(id) {
 		return fmt.Errorf("Invalid ID")
 	}
+	objectID := bson.ObjectIdHex(id)
 	s := mongoSession.Copy()
 	defer s.Close()
 	err := s.DB(database).C("news").RemoveId(objectID)

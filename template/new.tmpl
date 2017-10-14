@@ -1,0 +1,16 @@
+{{define "root-body"}}
+<div>
+  New Page<br>
+  <h1>{{.Topic}}</h1>
+  {{if .Image}}
+  <img src="{{.Image}}" alt="">
+  {{end}}
+  <p>{{.Description}}</p>
+</div>
+{{end}}
+
+{{define "root-script"}}
+{{end}}
+
+{{define "root-style"}}
+{{end}}

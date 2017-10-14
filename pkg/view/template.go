@@ -14,6 +14,7 @@ import (
 
 var (
 	tpIndex       = parseTemplate("root.tmpl", "index.tmpl")
+	tpNew         = parseTemplate("root.tmpl", "new.tmpl")
 	tpAdminLogin  = parseTemplate("root.tmpl", "admin/login.tmpl")
 	tpAdminList   = parseTemplate("root.tmpl", "admin/list.tmpl")
 	tpAdminCreate = parseTemplate("root.tmpl", "admin/create.tmpl")

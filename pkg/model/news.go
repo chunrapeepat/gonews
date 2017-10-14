@@ -59,10 +59,10 @@ func ListNews() ([]*News, error) {
 
 //GetNews get news from database with id
 func GetNews(id string) (*News, error) {
-	objectID := bson.ObjectId(id)
-	if !objectID.Valid() {
+	if !bson.IsObjectIdHex(id) {
 		return nil, fmt.Errorf("Invalid ID")
 	}
+	objectID := bson.ObjectIdHex(id)
 	s := mongoSession.Copy()
 	defer s.Close()
 	var n News
